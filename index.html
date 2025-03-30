@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Swirl</title>
   <link rel="icon" href="https://hc-cdn.hel1.your-objectstorage.com/s/v3/78ddce30558de677f3bc22dd86ef50e3fa8cb9df_download20250203181141.png" type="image/x-icon">
+  
   <style>
     body {
       background-color: #003366;
@@ -13,20 +15,40 @@
       font-family: 'Roboto', sans-serif;
       text-align: center;
     }
-    h1, h2 {
-      margin: 10px;
+
+    .typing-container {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #FF6600;
+      animation: typing 3s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
     }
+
+    .typing-container:nth-child(2) { animation-delay: 1s; }
+    .typing-container:nth-child(3) { animation-delay: 2s; }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      50% { border-color: transparent; }
+    }
+
     a {
       color: #FF6600;
       text-decoration: none;
       font-weight: bold;
     }
+
     .profile-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 20px;
     }
+
     .profile-img {
       width: 200px;
       height: auto;
@@ -34,26 +56,38 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       border-radius: 50%;
     }
-   
+
     .profile-img:hover {
       transform: scale(1.1);
       box-shadow: 0 0 20px rgba(255, 102, 0, 0.7);
       cursor: pointer;
     }
+
     .links {
       margin-top: 20px;
     }
+
     .links a {
       display: block;
       margin: 5px;
     }
+
+    .clock-container {
+      margin-top: 20px;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
-  <h1>Hey, This is Faizaan</h1>
-  <h2>I'm a Middle Schooler in India. I'm currently in 7th grade and a part of <a href="https://hackclub.com" target="_blank">Hack Club</a></h2>
-  <h2>When I'm not coding or free, I like to play Valorant and read books. I'm currently reading <a href="https://en.wikipedia.org/wiki/The_Book_of_Bill" target="_blank">The Book of Bill</a></h2>
-  
+
+  <h1 class="typing-container">Hey, This is Faizaan</h1>
+  <h2 class="typing-container">I'm a Middle Schooler in India. I'm currently in 7th grade and a part of <a href="https://hackclub.com" target="_blank">Hack Club</a></h2>
+  <h2 class="typing-container">When I'm not coding or free, I like to play Valorant and read books. I'm currently reading <a href="https://en.wikipedia.org/wiki/The_Book_of_Bill" target="_blank">The Book of Bill</a></h2>
+
+  <div class="clock-container">
+    <iframe src="https://free.timeanddate.com/clock/i8mzi6wj/n104/szw110/szh110/hoc000/hbw0/hfcfff/cf100/hncfff" frameborder="0" width="110" height="110"></iframe>
+  </div>
+
   <div class="profile-container">
     <img class="profile-img" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/78ddce30558de677f3bc22dd86ef50e3fa8cb9df_download20250203181141.png" alt="Profile Picture">
     <div class="links">
@@ -62,9 +96,11 @@
       <a href="projects.html">Projects</a>
     </div>
   </div>
+
+  <audio autoplay loop>
+    <source src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7615fc8845a4a03d75b72b3f009b52ce6e4d3701_luxury-apartments-300581_audio.mp4" type="audio/mp4">
+    Your browser does not support the audio element.
+  </audio>
+
 </body>
-<audio autoplay loop>
-  <source src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7615fc8845a4a03d75b72b3f009b52ce6e4d3701_luxury-apartments-300581_audio.mp4" type="audio/mp4">
-  Your browser does not support the audio element.
-</audio>
 </html>
