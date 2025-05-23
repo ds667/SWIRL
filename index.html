@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,100 +6,278 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Swirl</title>
   <link rel="icon" href="https://hc-cdn.hel1.your-objectstorage.com/s/v3/78ddce30558de677f3bc22dd86ef50e3fa8cb9df_download20250203181141.png" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     body {
-      background-color: #003366;
-      color: #FFFFFF;
-      font-family: 'Roboto', sans-serif;
-      text-align: center;
+      font-family: 'Inter', sans-serif;
     }
-
-    .typing-container {
+    
+    .typing-cursor {
       display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #FF6600;
-      animation: typing 3s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
+      width: 3px;
+      height: 1.2em;
+      background: linear-gradient(to bottom, #ff6600, #ff8833);
+      animation: cursor-blink 1.2s infinite;
+      margin-left: 2px;
+      border-radius: 1px;
     }
-
-    .typing-container:nth-child(2) { animation-delay: 1s; }
-    .typing-container:nth-child(3) { animation-delay: 2s; }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+    
+    @keyframes cursor-blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
     }
-
-    @keyframes blink-caret {
-      50% { border-color: transparent; }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #ff6600, #ff8833, #ffaa55);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-
-    a {
-      color: #FF6600;
-      text-decoration: none;
-      font-weight: bold;
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-
-    .profile-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 20px;
+    
+    .floating-animation {
+      animation: float 6s ease-in-out infinite;
     }
-
-    .profile-img {
-      width: 200px;
-      height: auto;
-      margin-top: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border-radius: 50%;
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
     }
-
-    .profile-img:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(255, 102, 0, 0.7);
-      cursor: pointer;
+    
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite alternate;
     }
-
-    .links {
-      margin-top: 20px;
+    
+    @keyframes pulse-glow {
+      from { box-shadow: 0 0 20px rgba(255, 102, 0, 0.4); }
+      to { box-shadow: 0 0 40px rgba(255, 102, 0, 0.8); }
     }
-
-    .links a {
-      display: block;
-      margin: 5px;
+    
+    .link-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .clock-container {
-      margin-top: 20px;
-      width: 100%;
+    
+    .link-hover:hover {
+      transform: translateY(-2px) scale(1.05);
+      text-shadow: 0 0 20px rgba(255, 102, 0, 0.6);
     }
   </style>
 </head>
-<body>
-
-  <h1 class="typing-container">Hey, This is Faizaan</h1>
-  <h2 class="typing-container">I'm a Middle Schooler in India. I'm currently in 7th grade and a part of <a href="https://hackclub.com" target="_blank">Hack Club</a></h2>
-  <h2 class="typing-container">When I'm not coding or free, I like to play Valorant and read books. I'm currently reading <a href="https://en.wikipedia.org/wiki/The_Book_of_Bill" target="_blank">The Book of Bill</a></h2>
-
-  <div class="clock-container">
-    <iframe src="https://free.timeanddate.com/clock/i8mzi6wj/n104/szw110/szh110/hoc000/hbw0/hfcfff/cf100/hncfff" frameborder="0" width="110" height="110"></iframe>
-  </div>
-
-  <div class="profile-container">
-    <img class="profile-img" src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/78ddce30558de677f3bc22dd86ef50e3fa8cb9df_download20250203181141.png" alt="Profile Picture">
-    <div class="links">
-      <a href="contact.html">Contact</a>
-      <a href="rickroll.html">Secret Video</a>
-      <a href="projects.html">Projects</a>
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen">
+  
+  <div class="container mx-auto px-4 py-8 text-center">
+    
+    <div class="mb-8">
+      <h1 class="text-4xl md:text-6xl font-bold mb-4 gradient-text">
+        <span id="typing-text-1" class="inline-block"></span>
+        <span class="typing-cursor" id="cursor-1"></span>
+      </h1>
     </div>
+    
+    <div class="max-w-4xl mx-auto mb-8">
+      <h2 class="text-xl md:text-2xl font-medium leading-relaxed mb-6 text-gray-200">
+        <span id="typing-text-2" class="inline-block"></span>
+        <span class="typing-cursor hidden" id="cursor-2"></span>
+      </h2>
+      
+      <h2 class="text-xl md:text-2xl font-medium leading-relaxed text-gray-200">
+        <span id="typing-text-3" class="inline-block"></span>
+        <span class="typing-cursor hidden" id="cursor-3"></span>
+      </h2>
+    </div>
+    
+    <div class="mb-8 floating-animation">
+      <div class="inline-block glass-effect rounded-full p-4">
+        <iframe src="https://free.timeanddate.com/clock/i8mzi6wj/n104/szw110/szh110/hoc000/hbw0/hfcfff/cf100/hncfff" 
+                frameborder="0" width="110" height="110" class="rounded-full"></iframe>
+      </div>
+    </div>
+    
+    <div class="flex flex-col items-center space-y-8">
+      <div class="relative">
+        <img class="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-orange-500 
+                   transition-all duration-500 hover:scale-110 pulse-glow cursor-pointer floating-animation" 
+             src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/78ddce30558de677f3bc22dd86ef50e3fa8cb9df_download20250203181141.png" 
+             alt="Profile Picture">
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href="contact.html" 
+           class="glass-effect px-6 py-3 rounded-lg font-semibold text-orange-300 
+                  link-hover border border-orange-500/30 hover:border-orange-500/60">
+          Contact
+        </a>
+        <a href="rickroll.html" 
+           class="glass-effect px-6 py-3 rounded-lg font-semibold text-orange-300 
+                  link-hover border border-orange-500/30 hover:border-orange-500/60">
+          Secret Video
+        </a>
+        <a href="projects.html" 
+           class="glass-effect px-6 py-3 rounded-lg font-semibold text-orange-300 
+                  link-hover border border-orange-500/30 hover:border-orange-500/60">
+          Projects
+        </a>
+      </div>
+    </div>
+    
   </div>
-
+  
   <audio autoplay loop>
     <source src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/7615fc8845a4a03d75b72b3f009b52ce6e4d3701_luxury-apartments-300581_audio.mp4" type="audio/mp4">
     Your browser does not support the audio element.
   </audio>
+
+  <script>
+    class TypeWriter {
+      constructor(element, text, speed = 50, delay = 0) {
+        this.element = element;
+        this.text = text;
+        this.speed = speed;
+        this.delay = delay;
+        this.index = 0;
+        this.isHTML = /<[^>]*>/.test(text);
+        
+        if (this.isHTML) {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = text;
+          this.plainText = tempDiv.textContent || tempDiv.innerText || '';
+          this.htmlText = text;
+        } else {
+          this.plainText = text;
+        }
+      }
+      
+      async type() {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const cursor = document.getElementById(this.element.id.replace('typing-text', 'cursor'));
+            if (cursor) cursor.classList.remove('hidden');
+            
+            const typeInterval = setInterval(() => {
+              if (this.index < this.plainText.length) {
+                const currentChar = this.plainText.charAt(this.index);
+                
+                if (this.isHTML) {
+                  const visibleText = this.plainText.substring(0, this.index + 1);
+                  this.element.innerHTML = this.replaceTextInHTML(this.htmlText, visibleText);
+                } else {
+                  this.element.textContent += currentChar;
+                }
+                
+                this.index++;
+              } else {
+                clearInterval(typeInterval);
+                setTimeout(() => {
+                  if (cursor) cursor.classList.add('hidden');
+                  resolve();
+                }, 500);
+              }
+            }, this.speed);
+          }, this.delay);
+        });
+      }
+      
+      replaceTextInHTML(html, visibleText) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        
+        const walker = document.createTreeWalker(
+          tempDiv,
+          NodeFilter.SHOW_TEXT,
+          null,
+          false
+        );
+        
+        let textNodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+          textNodes.push(node);
+        }
+        
+        let charCount = 0;
+        let targetLength = visibleText.length;
+        
+        for (let textNode of textNodes) {
+          const nodeText = textNode.textContent;
+          const nodeLength = nodeText.length;
+          
+          if (charCount + nodeLength <= targetLength) {
+            charCount += nodeLength;
+          } else {
+            // Show  node
+            const partialLength = targetLength - charCount;
+            textNode.textContent = nodeText.substring(0, partialLength);
+            break;
+          }
+        }
+        
+        return tempDiv.innerHTML;
+      }
+    }
+    
+    const texts = [
+      "Hey, This is Faizaan",
+      `I'm a Middle Schooler in India. I'm currently in 7th grade and a part of <a href="https://hackclub.com" target="_blank" class="text-orange-400 hover:text-orange-300 underline decoration-orange-400/50 hover:decoration-orange-300">Hack Club</a>`,
+      `When I'm not coding or free, I like to play Valorant and read books. I'm currently reading <a href="https://en.wikipedia.org/wiki/The_Book_of_Bill" target="_blank" class="text-orange-400 hover:text-orange-300 underline decoration-orange-400/50 hover:decoration-orange-300">The Book of Bill</a>`
+    ];
+    
+    async function startTypingAnimations() {
+      const typeWriter1 = new TypeWriter(
+        document.getElementById('typing-text-1'), 
+        texts[0], 
+        80, 
+        500
+      );
+      
+      const typeWriter2 = new TypeWriter(
+        document.getElementById('typing-text-2'), 
+        texts[1], 
+        40, 
+        0
+      );
+      
+      const typeWriter3 = new TypeWriter(
+        document.getElementById('typing-text-3'), 
+        texts[2], 
+        40, 
+        0
+      );
+      
+      await typeWriter1.type();
+      await typeWriter2.type();
+      await typeWriter3.type();
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      startTypingAnimations();
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+      const cursor = document.querySelectorAll('.typing-cursor');
+      cursor.forEach(c => {
+        if (!c.classList.contains('hidden')) {
+          const rect = c.getBoundingClientRect();
+          const distance = Math.sqrt(
+            Math.pow(e.clientX - rect.left, 2) + 
+            Math.pow(e.clientY - rect.top, 2)
+          );
+          
+          if (distance < 100) {
+            c.style.transform = `scale(${1 + (100 - distance) / 500})`;
+          } else {
+            c.style.transform = 'scale(1)';
+          }
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
