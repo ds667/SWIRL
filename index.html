@@ -68,10 +68,99 @@
       transform: translateY(-2px) scale(1.05);
       text-shadow: 0 0 20px rgba(255, 102, 0, 0.6);
     }
+    
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 102, 0, 0.6);
+      border-radius: 50%;
+      animation: float-particle 20s infinite linear;
+    }
+    
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .skill-badge {
+      transition: all 0.3s ease;
+      transform: scale(0);
+      animation: skill-appear 0.6s ease forwards;
+    }
+    
+    @keyframes skill-appear {
+      0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    
+    .skill-badge:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+    
+    .theme-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    
+    .music-visualizer {
+      display: flex;
+      align-items: end;
+      gap: 2px;
+      height: 30px;
+    }
+    
+    .bar {
+      width: 4px;
+      background: linear-gradient(to top, #ff6600, #ff8833);
+      border-radius: 2px;
+      animation: music-bar 1.5s ease-in-out infinite;
+    }
+    
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.3s; }
+    .bar:nth-child(4) { animation-delay: 0.5s; }
+    .bar:nth-child(5) { animation-delay: 0.7s; }
+    
+    @keyframes music-bar {
+      0%, 100% { height: 5px; }
+      50% { height: 25px; }
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen">
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen transition-all duration-500" id="main-body">
   
+  <div class="particles" id="particles"></div>
+  
+  <div class="theme-switcher">
+    <button id="theme-toggle" class="glass-effect p-3 rounded-full text-orange-300 hover:text-orange-200 transition-all duration-300">
+      🌙
+    </button>
+  </div>
   <div class="container mx-auto px-4 py-8 text-center">
     
     <div class="mb-8">
@@ -97,6 +186,22 @@
       <div class="inline-block glass-effect rounded-full p-4">
         <iframe src="https://free.timeanddate.com/clock/i8mzi6wj/n104/szw110/szh110/hoc000/hbw0/hfcfff/cf100/hncfff" 
                 frameborder="0" width="110" height="110" class="rounded-full"></iframe>
+      </div>
+      
+      <div class="mt-4 flex justify-center">
+        <div class="music-visualizer">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mb-8">
+      <h3 class="text-2xl font-semibold mb-4 text-orange-300">Skills & Interests</h3>
+      <div class="flex flex-wrap justify-center gap-3" id="skills-container">
       </div>
     </div>
     
@@ -211,7 +316,6 @@
           if (charCount + nodeLength <= targetLength) {
             charCount += nodeLength;
           } else {
-            // Show  node
             const partialLength = targetLength - charCount;
             textNode.textContent = nodeText.substring(0, partialLength);
             break;
@@ -257,7 +361,85 @@
     
     document.addEventListener('DOMContentLoaded', () => {
       startTypingAnimations();
+      createParticles();
+      createSkillBadges();
+      initThemeToggle();
     });
+    
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const numParticles = 50;
+      
+      for (let i = 0; i < numParticles; i++) {
+        setTimeout(() => {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 20 + 's';
+          particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+          particlesContainer.appendChild(particle);
+          
+          setTimeout(() => {
+            particle.remove();
+          }, 25000);
+        }, i * 100);
+      }
+      
+      setInterval(() => {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        particlesContainer.appendChild(particle);
+        
+        setTimeout(() => {
+          particle.remove();
+        }, 25000);
+      }, 500);
+    }
+    
+    function createSkillBadges() {
+      const skills = [
+        { name: 'JavaScript', icon: '🟨' },
+        { name: 'HTML/CSS', icon: '🎨' },
+        { name: 'Python', icon: '🐍' },
+        { name: 'Valorant', icon: '🎮' },
+        { name: 'Reading', icon: '📚' },
+        { name: 'Hack Club', icon: '🏫' },
+        { name: 'Web Dev', icon: '💻' },
+        { name: '7th Grade', icon: '🎓' }
+      ];
+      
+      const container = document.getElementById('skills-container');
+      
+      skills.forEach((skill, index) => {
+        setTimeout(() => {
+          const badge = document.createElement('div');
+          badge.className = 'skill-badge glass-effect px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:shadow-lg';
+          badge.style.animationDelay = index * 0.1 + 's';
+          badge.innerHTML = `<span>${skill.icon}</span><span>${skill.name}</span>`;
+          container.appendChild(badge);
+        }, 4000 + index * 200);
+      });
+    }
+    
+    function initThemeToggle() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.getElementById('main-body');
+      let isDark = true;
+      
+      themeToggle.addEventListener('click', () => {
+        isDark = !isDark;
+        
+        if (isDark) {
+          body.className = 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen transition-all duration-500';
+          themeToggle.textContent = '🌙';
+        } else {
+          body.className = 'bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 text-white min-h-screen transition-all duration-500';
+          themeToggle.textContent = '☀️';
+        }
+      });
+    }
     
     document.addEventListener('mousemove', (e) => {
       const cursor = document.querySelectorAll('.typing-cursor');
