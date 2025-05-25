@@ -150,6 +150,88 @@
       0%, 100% { height: 5px; }
       50% { height: 25px; }
     }
+    
+    .terminal {
+      background: rgba(0, 0, 0, 0.9);
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      padding: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
+    }
+    
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27ca3f; }
+    
+    .terminal-content {
+      min-height: 200px;
+      line-height: 1.6;
+    }
+    
+    .terminal-prompt {
+      color: #00ff00;
+    }
+    
+    .terminal-input {
+      background: transparent;
+      border: none;
+      color: #00ff00;
+      font-family: inherit;
+      font-size: inherit;
+      outline: none;
+      width: 100%;
+    }
+    
+    .terminal-line {
+      margin: 5px 0;
+    }
+    
+    .terminal-response {
+      color: #00ccff;
+      margin-left: 20px;
+    }
+    
+    .terminal-error {
+      color: #ff6b6b;
+      margin-left: 20px;
+    }
+    
+    .terminal-success {
+      color: #51cf66;
+      margin-left: 20px;
+    }
+    
+    .typing-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 1em;
+      background: #00ff00;
+      animation: terminal-blink 1s infinite;
+    }
+    
+    @keyframes terminal-blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white min-h-screen transition-all duration-500" id="main-body">
@@ -202,6 +284,42 @@
     <div class="mb-8">
       <h3 class="text-2xl font-semibold mb-4 text-orange-300">Skills & Interests</h3>
       <div class="flex flex-wrap justify-center gap-3" id="skills-container">
+      </div>
+    </div>
+    
+    <div class="mb-8" id="terminal-section" style="display: none;">
+      <h3 class="text-2xl font-semibold mb-4 text-orange-300">Interactive Terminal</h3>
+      <div class="terminal">
+        <div class="terminal-header">
+          <div class="terminal-dot dot-red"></div>
+          <div class="terminal-dot dot-yellow"></div>
+          <div class="terminal-dot dot-green"></div>
+          <span class="ml-2 text-gray-400 text-sm">faizaan@terminal</span>
+        </div>
+        <div class="terminal-content" id="terminal-content">
+          <div class="terminal-line">
+            <span class="terminal-prompt">faizaan@dev:~$ </span>
+            <span>help</span>
+          </div>
+          <div class="terminal-response">
+            Welcome to Faizaan's Interactive Terminal! 🚀<br>
+            Available commands:<br>
+            • about - Learn more about me<br>
+            • skills - View my technical skills<br>
+            • projects - See what I'm working on<br>
+            • games - My favorite games<br>
+            • books - What I'm reading<br>
+            • contact - Get in touch<br>
+            • clear - Clear the terminal<br>
+            • matrix - Enter the Matrix 😎<br>
+            • joke - Random programming joke<br>
+          </div>
+          <div class="terminal-line">
+            <span class="terminal-prompt">faizaan@dev:~$ </span>
+            <input type="text" class="terminal-input" id="terminal-input" placeholder="Type a command...">
+            <span class="typing-indicator"></span>
+          </div>
+        </div>
       </div>
     </div>
     
@@ -271,11 +389,9 @@
                 const currentChar = this.plainText.charAt(this.index);
                 
                 if (this.isHTML) {
-                  // For HTML content, progressively reveal text while maintaining HTML structure
                   const visibleText = this.plainText.substring(0, this.index + 1);
                   this.element.innerHTML = this.replaceTextInHTML(this.htmlText, visibleText);
                 } else {
-                  // For plain text, add character by character
                   this.element.textContent += currentChar;
                 }
                 
@@ -317,10 +433,8 @@
           const nodeLength = nodeText.length;
           
           if (charCount + nodeLength <= targetLength) {
-            // Show entire node
             charCount += nodeLength;
           } else {
-            // Show partial node
             const partialLength = targetLength - charCount;
             textNode.textContent = nodeText.substring(0, partialLength);
             break;
@@ -364,13 +478,121 @@
       await typeWriter3.type();
     }
     
-    // Start animations when page loads
     document.addEventListener('DOMContentLoaded', () => {
       startTypingAnimations();
       createParticles();
       createSkillBadges();
       initThemeToggle();
+      initTerminal();
     });
+    
+    function initTerminal() {
+      setTimeout(() => {
+        document.getElementById('terminal-section').style.display = 'block';
+        document.getElementById('terminal-section').style.opacity = '0';
+        document.getElementById('terminal-section').style.transform = 'translateY(20px)';
+        document.getElementById('terminal-section').style.transition = 'all 0.8s ease';
+        
+        setTimeout(() => {
+          document.getElementById('terminal-section').style.opacity = '1';
+          document.getElementById('terminal-section').style.transform = 'translateY(0)';
+        }, 100);
+      }, 6000);
+      
+      const terminalInput = document.getElementById('terminal-input');
+      const terminalContent = document.getElementById('terminal-content');
+      
+      const commands = {
+        about: () => "I'm Faizaan, a 7th grade student from India who loves coding! 🇮🇳\nI'm passionate about web development and learning new technologies.",
+        
+        skills: () => "🚀 Technical Skills:\n• JavaScript & Web Development\n• HTML/CSS & UI Design\n• Python Programming\n• Git & Version Control\n• Problem Solving & Logic",
+        
+        projects: () => "🛠️ Current Projects:\n• Personal Portfolio Website (this one!)\n• Learning React & Node.js\n• Building small games with JavaScript\n• Contributing to open source",
+        
+        games: () => "🎮 Favorite Games:\n• Valorant (my main game!)\n• Minecraft (creative builds)\n• Chess (strategy games)\n• Browser-based coding games",
+        
+        books: () => "📚 Currently Reading:\n• The Book of Bill (Gravity Falls)\n• JavaScript: The Good Parts\n• Clean Code by Robert Martin\n• Various programming tutorials",
+        
+        contact: () => "📧 Let's Connect:\n• Check out my contact page\n• Find me on Hack Club Slack\n• GitHub: (coming soon!)\n• Always open to collaboration!",
+        
+        clear: () => 'CLEAR',
+        
+        matrix: () => {
+          const chars = '01';
+          let result = '';
+          for(let i = 0; i < 200; i++) {
+            result += chars[Math.floor(Math.random() * chars.length)];
+            if(i % 20 === 0) result += '\n';
+          }
+          return `<span style="color: #00ff00; animation: terminal-blink 0.1s infinite;">${result}</span>\n\nWelcome to the Matrix, Neo... 😎`;
+        },
+        
+        joke: () => {
+          const jokes = [
+            "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+            "How many programmers does it take to change a light bulb? None, that's a hardware problem! 💡",
+            "Why do Java developers wear glasses? Because they can't C# ! 👓",
+            "A SQL query goes into a bar, walks up to two tables and asks... 'Can I join you?' 🍺",
+            "Why did the programmer quit his job? He didn't get arrays! 📊",
+            "There are only 10 types of people: those who understand binary and those who don't! 🔢"
+          ];
+          return jokes[Math.floor(Math.random() * jokes.length)];
+        },
+        
+        help: () => "Available commands:\n• about - Learn more about me\n• skills - View my technical skills\n• projects - See what I'm working on\n• games - My favorite games\n• books - What I'm reading\n• contact - Get in touch\n• clear - Clear the terminal\n• matrix - Enter the Matrix 😎\n• joke - Random programming joke"
+      };
+      
+      terminalInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const command = terminalInput.value.trim().toLowerCase();
+          const inputLine = document.createElement('div');
+          inputLine.className = 'terminal-line';
+          inputLine.innerHTML = `<span class="terminal-prompt">faizaan@dev:~$ </span>${terminalInput.value}`;
+          
+          const currentInput = terminalInput.parentElement;
+          terminalContent.insertBefore(inputLine, currentInput);
+          
+          if (commands[command]) {
+            const response = commands[command]();
+            if (response === 'CLEAR') {
+              terminalContent.innerHTML = `
+                <div class="terminal-line">
+                  <span class="terminal-prompt">faizaan@dev:~$ </span>
+                  <input type="text" class="terminal-input" id="terminal-input" placeholder="Type a command...">
+                  <span class="typing-indicator"></span>
+                </div>
+              `;
+              document.getElementById('terminal-input').focus();
+              initTerminalInput();
+              return;
+            } else {
+              const responseLine = document.createElement('div');
+              responseLine.className = 'terminal-response';
+              responseLine.innerHTML = response;
+              terminalContent.insertBefore(responseLine, currentInput);
+            }
+          } else if (command) {
+            const errorLine = document.createElement('div');
+            errorLine.className = 'terminal-error';
+            errorLine.textContent = `Command not found: ${command}. Type 'help' for available commands.`;
+            terminalContent.insertBefore(errorLine, currentInput);
+          }
+          
+          terminalInput.value = '';
+          terminalContent.scrollTop = terminalContent.scrollHeight;
+        }
+      });
+      
+      function initTerminalInput() {
+        const newInput = document.getElementById('terminal-input');
+        if (newInput) {
+          newInput.addEventListener('keypress', arguments.callee);
+          newInput.focus();
+        }
+      }
+      
+      terminalInput.focus();
+    }
     
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
@@ -447,7 +669,6 @@
       });
     }
     
-    // Add some interactive effects
     document.addEventListener('mousemove', (e) => {
       const cursor = document.querySelectorAll('.typing-cursor');
       cursor.forEach(c => {
