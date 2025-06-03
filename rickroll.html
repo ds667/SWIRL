@@ -11,10 +11,113 @@
       font-family: 'Roboto', sans-serif;
       text-align: center;
       padding: 20px;
+      transition: background-color 0.5s, color 0.5s;
     }
+
     audio {
       margin-top: 20px;
       width: 300px;
+    }
+
+    .visualizer {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin: 20px auto;
+      height: 40px;
+    }
+
+    .bar {
+      width: 5px;
+      background: #00ffcc;
+      animation: bounce 1s infinite ease-in-out;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; }
+    .bar:nth-child(2) { animation-delay: 0.2s; }
+    .bar:nth-child(3) { animation-delay: 0.4s; }
+    .bar:nth-child(4) { animation-delay: 0.6s; }
+    .bar:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes bounce {
+      0%, 100% { height: 10px; }
+      50% { height: 40px; }
+    }
+
+    .toggle-mode {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #ffcc00;
+      color: #003366;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    body.light-mode {
+      background-color: #f0f0f0;
+      color: #003366;
+    }
+
+    body.light-mode .secret-button {
+      background-color: #003366;
+      color: white;
+      box-shadow: 0 0 15px rgba(0, 51, 102, 0.5);
+    }
+
+    body.light-mode .toggle-mode {
+      background-color: #003366;
+      color: #fff;
+    }
+
+    .blurred {
+      margin-top: 30px;
+      filter: blur(6px);
+      transition: filter 0.3s ease;
+      cursor: pointer;
+    }
+
+    .blurred:hover {
+      filter: blur(0);
+    }
+
+    #scroll-secret {
+      display: none;
+      margin-top: 1000px;
+      font-size: 1.2em;
+      color: #ff66cc;
+    }
+
+    .secret-button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      color: #fff;
+      background-color: #6600cc;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(102, 0, 204, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .secret-button:hover {
+      background-color: #7f00ff;
+      box-shadow: 0 0 20px rgba(127, 0, 255, 1);
+    }
+
+    #secret-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.3em;
+      color: #00ffcc;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
@@ -22,10 +125,45 @@
 
   <h1>Secret Video</h1>
   <p>Shhh... It's a secret! 🤫</p>
+
+  <div class="visualizer">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
   <audio controls autoplay>
     <source src="https://hc-cdn.hel1.your-objectstorage.com/s/v3/8348f853c2057abe4a37a9cf6b735241bcd2a913_jocofullinterview41_audio.mp4" type="audio/mp4">
     Your browser does not support the audio element.
   </audio>
+
+  <button class="toggle-mode" onclick="toggleMode()">Toggle Light/Dark Mode</button>
+
+  <button class="secret-button" onclick="revealSecret()">Reveal the Secret 🌟</button>
+  <div id="secret-message">You've found the hidden message! 🎉 The cake is a lie. 🍰</div>
+
+  <p class="blurred">This message self-destructs in 3... 2... oh wait nevermind 😅</p>
+
+  <div id="scroll-secret">🎯 You scrolled far enough to unlock the Ultra Secret Message!</div>
+
+  <script>
+    function revealSecret() {
+      document.getElementById('secret-message').style.display = 'block';
+    }
+
+    function toggleMode() {
+      document.body.classList.toggle('light-mode');
+    }
+
+    window.addEventListener('scroll', () => {
+      const scrollSecret = document.getElementById('scroll-secret');
+      if (window.scrollY + window.innerHeight >= scrollSecret.offsetTop) {
+        scrollSecret.style.display = 'block';
+      }
+    });
+  </script>
 
 </body>
 </html>
